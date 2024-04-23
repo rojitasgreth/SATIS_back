@@ -3,10 +3,11 @@ const {dbconn} = require('../bd/index');
 async function listarOrdenes(data, callback){
     try {
         let {idUser} = data;
+        console.log(data);
 
         let sql = `SELECT * FROM orden_compra WHERE id_usuario = ${idUser};`;
         let outSql = await dbconn.query(sql);
-        let obj = outSql[0][0]
+        let obj = outSql[0];
 
         console.log(obj, 'holaaa');
 
