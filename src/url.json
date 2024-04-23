@@ -1,5 +1,15 @@
 {
     "users": {
         "login": "/satis/login"
+    },
+    "listados": {
+        "listarOrdenes": "/satis/listarOrdenes",
+        "listarProductos": "/satis/listarProductos",
+        "listarCliente": "/satis/listarCliente",
+        "listarColores": "/satis/listarColores"
+
+    },
+    "inserciones": {
+        "insertarCliente": "/satis/insertarCliente"
     }
 }
