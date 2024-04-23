@@ -10,5 +10,7 @@ app.use(express.json());
 // Aqui van la configuracion de rutas configuradas.
 app.use(require('./routes/index.routes'));
 app.use(require('./routes/users.routes'));
+app.use(require('./routes/listados.routes'));
+app.use(require('./routes/inserciones.routes'));
 //Se exporta el modulo.
 module.exports = app;
