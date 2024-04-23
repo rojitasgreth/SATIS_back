@@ -6,7 +6,8 @@
         "listarOrdenes": "/satis/listarOrdenes",
         "listarProductos": "/satis/listarProductos",
         "listarCliente": "/satis/listarCliente",
-        "listarColores": "/satis/listarColores"
+        "listarColores": "/satis/listarColores",
+        "listarDetalles": "/satis/listarDetalles"
 
     },
     "inserciones": {
