@@ -24,23 +24,23 @@ async function listarOrdenes(data, callback){
 
 async function listarProductos(data, callback){
     try {
-        let {Condicion} = data;
+        let {Condicion, Envio} = data;
         let obj;
 
-        if (Condicion == 1) {
-            let sql = `SELECT cod_categoria, categoria, descripcion, cantidad_piezas, precio, total FROM detalle_categoria;`;
+        if (Condicion != 'Distribuidor') {
+            let sql = `SELECT cod_categoria, categoria, descripcion, cantidad_piezas, precio, total, img FROM detalle_categoria;`;
             let outSql = await dbconn.query(sql);
             obj = outSql[0]
         }
 
-        if (Condicion == 2) {
-            let sql = `SELECT cod_categoria, categoria, descripcion, cantidad_piezas, precio_con_envio, total_con_envio FROM detalle_categoria;`;
+        if (Envio == 'Nacional') {
+            let sql = `SELECT cod_categoria, categoria, descripcion, cantidad_piezas, precio_con_envio, total_con_envio, img FROM detalle_categoria;`;
             let outSql = await dbconn.query(sql);
             obj = outSql[0]
         }
 
-        if (Condicion == 3) {
-            let sql = `SELECT cod_categoria, categoria, descripcion, cantidad_piezas, precio_dist, total_dist FROM detalle_categoria;`;
+        if (Condicion == 'Distribuidor') {
+            let sql = `SELECT cod_categoria, categoria, descripcion, cantidad_piezas, precio_dist, total_dist, img FROM detalle_categoria;`;
             let outSql = await dbconn.query(sql);
             obj = outSql[0]
         }
