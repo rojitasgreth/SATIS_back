@@ -58,6 +58,41 @@ async function listarProductos(data, callback){
     }
 }
 
+async function listarProductoIndividual(data, callback){
+    try {
+        let {Condicion, Envio, Codigo} = data;
+        let obj;
+
+        if (Condicion != 'Distribuidor') {
+            let sql = `SELECT cod_categoria, categoria, descripcion, cantidad_piezas, precio, total, img FROM detalle_categoria WHERE cod_categoria = '${Codigo}';`;
+            let outSql = await dbconn.query(sql);
+            obj = outSql[0]
+        }
+
+        if (Envio == 'Nacional') {
+            let sql = `SELECT cod_categoria, categoria, descripcion, cantidad_piezas, precio_con_envio, total_con_envio, img FROM detalle_categoria WHERE cod_categoria = '${Codigo}' ;`;
+            let outSql = await dbconn.query(sql);
+            obj = outSql[0]
+        }
+
+        if (Condicion == 'Distribuidor') {
+            let sql = `SELECT cod_categoria, categoria, descripcion, cantidad_piezas, precio_dist, total_dist, img FROM detalle_categoria WHERE cod_categoria = '${Codigo}';`;
+            let outSql = await dbconn.query(sql);
+            obj = outSql[0]
+        }
+
+        if (obj == undefined) {
+            callback(null, 'VACIO');
+        } else {
+            callback(null, obj);
+        }
+        
+    } catch (error) {
+        console.error(error, 'Error listado');
+        callback(error, null);
+    }
+}
+
 async function listarCliente(data, callback){
     try {
         let {RIF} = data;
@@ -131,6 +166,7 @@ async function listarDetalles(data, callback){
 module.exports = {
     listarOrdenes,
     listarProductos,
+    listarProductoIndividual,
     listarCliente,
     listarColores,
     listarDetalles

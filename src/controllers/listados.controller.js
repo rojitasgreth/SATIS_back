@@ -23,6 +23,17 @@ async function listarProductos(req, res) {
    });
 }
 
+async function listarProductoIndividual(req, res) {
+    const errors = validationResult(req);
+   if (!errors.isEmpty()) return res.send({ code: 204, message: 'Validation Errors', errors: errors.array() });
+   model.listarProductoIndividual(req.body, (error, data) => {
+       if (error) {
+           return res.status(500).json({ code: 500, message: 'Internal Server Error...', error: error });
+       }
+       res.status(200).json(data); 
+   });
+}
+
 async function listarCliente(req, res) {
     const errors = validationResult(req);
    if (!errors.isEmpty()) return res.send({ code: 204, message: 'Validation Errors', errors: errors.array() });
@@ -59,6 +70,7 @@ async function listarDetalles(req, res) {
 module.exports = {
     listarOrdenes,
     listarProductos,
+    listarProductoIndividual,
     listarCliente,
     listarColores,
     listarDetalles
