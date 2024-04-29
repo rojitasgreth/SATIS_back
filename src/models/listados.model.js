@@ -58,6 +58,27 @@ async function listarProductos(data, callback){
     }
 }
 
+async function listarProductosGeneral(data, callback){
+    try {
+
+        let obj;
+
+            let sql = `SELECT cod_categoria, categoria, descripcion, cantidad_piezas, img FROM detalle_categoria ORDER BY categoria;`;
+            let outSql = await dbconn.query(sql);
+            obj = outSql[0]
+        
+        if (obj == undefined) {
+            callback(null, 'VACIO');
+        } else {
+            callback(null, obj);
+        }
+        
+    } catch (error) {
+        console.error(error, 'Error listado');
+        callback(error, null);
+    }
+}
+
 async function listarProductoIndividual(data, callback){
     try {
         let {Condicion, Envio, Codigo} = data;
@@ -166,6 +187,7 @@ async function listarDetalles(data, callback){
 module.exports = {
     listarOrdenes,
     listarProductos,
+    listarProductosGeneral,
     listarProductoIndividual,
     listarCliente,
     listarColores,

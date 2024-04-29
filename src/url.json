@@ -5,6 +5,7 @@
     "listados": {
         "listarOrdenes": "/satis/listarOrdenes",
         "listarProductos": "/satis/listarProductos",
+        "listarProductosGeneral": "/satis/listarProductosGeneral",
         "listarProductoIndividual": "/satis/listarProductoIndividual",
         "listarCliente": "/satis/listarCliente",
         "listarColores": "/satis/listarColores",
