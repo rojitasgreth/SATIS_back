@@ -49,6 +49,7 @@ async function listarProductos(data, callback){
         if (obj == undefined) {
             callback(null, 'VACIO');
         } else {
+            console.log(obj);
             callback(null, obj);
         }
         
@@ -137,6 +138,7 @@ async function listarCliente(data, callback){
 async function listarColores(data, callback){
     try {
         let {cod_categoria, genero} = data;
+        console.log(data);
 
         let sql = `SELECT codigo_color, descripcion_color FROM detalle_colores WHERE genero = '${genero}' AND categoria = '${cod_categoria}';`;
         let outSql = await dbconn.query(sql);

@@ -19,9 +19,9 @@ const listadosValidacion = {
             .notEmpty().withMessage(notempty)
             .isString().withMessage(notvarchar),
 
-        check('Envio')
-            .notEmpty().withMessage(notempty)
-            .isString().withMessage(notvarchar)
+        //check('Envio')
+            //.notEmpty().withMessage(notempty)
+            //.isString().withMessage(notvarchar)
     ],
     listarCliente: [
         check('RIF')
