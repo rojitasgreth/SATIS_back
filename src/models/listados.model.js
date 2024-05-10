@@ -9,7 +9,32 @@ async function listarOrdenes(data, callback){
         let outSql = await dbconn.query(sql);
         let obj = outSql[0];
 
-        console.log(obj, 'holaaa');
+        if (obj == undefined) {
+            callback(null, 'VACIO');
+        } else {
+            callback(null, obj);
+        }
+        
+    } catch (error) {
+        console.error(error, 'Error listar');
+        callback(error, null);
+    }
+}
+
+async function listarOrden(data, callback){
+    try {
+        let {idUser, idOrden} = data;
+        console.log(data);
+
+        let sql = `SELECT dor.id as id_orden, oc.fecha, condiciones, tipo_envio, razon_social, rif, telefono, correo, estado, calle, edificio, descripcion, dor.genero, dco.descripcion_color,cantidad 
+                   FROM orden_compra oc 
+                   INNER JOIN clientes as cl ON oc.id_cliente = cl.id 
+                   INNER JOIN detalle_orden dor ON oc.id = dor.id_orden
+                   INNER JOIN detalle_categoria dc ON dc.cod_categoria = dor.cod_categoria
+                   INNER JOIN detalle_colores dco ON  dco.codigo_color = dor.cod_color AND dco.categoria = dor.cod_categoria AND dco.genero = dor.genero
+                   WHERE id_usuario = ${idUser} AND dor.id = ${idOrden}`;
+        let outSql = await dbconn.query(sql);
+        let obj = outSql[0];
 
         if (obj == undefined) {
             callback(null, 'VACIO');
@@ -186,6 +211,7 @@ async function listarDetalles(data, callback){
 
 module.exports = {
     listarOrdenes,
+    listarOrden,
     listarProductos,
     listarProductosGeneral,
     listarProductoIndividual,

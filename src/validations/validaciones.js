@@ -74,8 +74,6 @@ const insercionesValidacion = {
         check('calle')
             .notEmpty().withMessage(notempty)
             .isString().withMessage(notvarchar),
-        check('edificio')
-            .isString().withMessage(notvarchar)
         ]
      }
 
