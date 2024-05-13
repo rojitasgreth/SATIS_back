@@ -4,6 +4,7 @@
     },
     "listados": {
         "listarOrdenes": "/satis/listarOrdenes",
+        "listarOrden": "/satis/listarOrden",
         "listarProductos": "/satis/listarProductos",
         "listarProductosGeneral": "/satis/listarProductosGeneral",
         "listarProductoIndividual": "/satis/listarProductoIndividual",
@@ -13,6 +14,7 @@
 
     },
     "inserciones": {
-        "insertarCliente": "/satis/insertarCliente"
+        "insertarCliente": "/satis/insertarCliente",
+        "insertarOrden": "/satis/insertarOrden"
     }
 }

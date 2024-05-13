@@ -77,8 +77,20 @@ async function listarDetalles(req, res) {
    });
 }
 
+async function listarOrden(req, res) {
+    const errors = validationResult(req);
+   if (!errors.isEmpty()) return res.send({ code: 204, message: 'Validation Errors', errors: errors.array() });
+   model.listarOrden(req.body, (error, data) => {
+       if (error) {
+           return res.status(500).json({ code: 500, message: 'Internal Server Error...', error: error });
+       }
+       res.status(200).json(data); 
+   });
+}
+
 module.exports = {
     listarOrdenes,
+    listarOrden,
     listarProductos,
     listarProductosGeneral,
     listarProductoIndividual,

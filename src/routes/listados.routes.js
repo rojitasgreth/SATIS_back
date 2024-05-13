@@ -5,6 +5,7 @@ const controller = require('../controllers/listados.controller');
 const validacion = require('../validations/validaciones')
 
 route.post(url.listados.listarOrdenes, validacion.listadosValidacion.listarOrdenes, controller.listarOrdenes);
+route.post(url.listados.listarOrden, controller.listarOrden);
 route.post(url.listados.listarProductos ,validacion.listadosValidacion.listarProductos, controller.listarProductos);
 route.post(url.listados.listarProductosGeneral , controller.listarProductosGeneral);
 route.post(url.listados.listarProductoIndividual , controller.listarProductoIndividual);
