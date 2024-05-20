@@ -12,5 +12,6 @@ app.use(require('./routes/index.routes'));
 app.use(require('./routes/users.routes'));
 app.use(require('./routes/listados.routes'));
 app.use(require('./routes/inserciones.routes'));
+app.use(require('./routes/servicioCorreo.route'));
 //Se exporta el modulo.
 module.exports = app;

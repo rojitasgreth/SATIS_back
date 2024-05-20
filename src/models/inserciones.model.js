@@ -1,17 +1,21 @@
 const {dbconn} = require('../bd/index');
 
+const {
+    EmailFormatUser,
+    sendEmail
+} = require("./servicioCorreo.model");
+
 async function insertarCliente(data, callback){
     try {
         let {rif, razon_social, telefono, correo, estado, calle, edificio} = data;
 
         let sql = `INSERT INTO public.clientes(rif, razon_social, telefono, correo, estado, calle, edificio)
-                                        VALUES ('${rif}', '${razon_social}', '${telefono}', '${correo}', '${estado}', '${calle}', ${edificio !== undefined ? `'${edificio}'` : 'null'});`;
+                                        VALUES ('${rif}', '${razon_social}', '${telefono}', '${correo}', '${estado}', '${calle}', ${edificio !== undefined ? `'${edificio}'` : 'null'}) RETURNING id;`;
+        let outsql = await dbconn.query(sql);
+        let idCliente = outsql[0][0].id;
 
-        let outSql = await dbconn.query(sql);
-
-
-        callback(null, 'Insercion correcta');
-    } catch (error) {
+        callback(null, idCliente);
+        } catch (error) {
         console.error(error, 'Error de Insercion');
         callback(error, null);
     }
@@ -26,6 +30,7 @@ async function insertarOrden(data, callback){
             let sql = `INSERT INTO public.orden_compra(id_cliente, id_usuario, condiciones, tipo_envio, estatus_finalizado, estatus_correo) 
                         VALUES ('${data.cliente.id_cliente}', '${data.cliente.id_usuario}', '${data.cliente.condicion}', '${data.cliente.tipo_envio}', true , false) RETURNING id`;
                     let outsql = await dbconn.query (sql, {transaction});
+                    let correoAlternativo = "dearribaa2002@gmail.com"
                     console.log(outsql);
                     let idSql = outsql[0][0].id;
     
@@ -36,8 +41,12 @@ async function insertarOrden(data, callback){
                         console.log(outsql2);
             }
 
+            const html = EmailFormatUser();
+            //console.log(html);
+
             await transaction.commit()
             callback(null, 'Insercion correcta');
+            sendEmail(correoAlternativo, "Correo exitoso", html);
             
             }catch (error) {
 

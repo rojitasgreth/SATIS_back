@@ -16,5 +16,8 @@
     "inserciones": {
         "insertarCliente": "/satis/insertarCliente",
         "insertarOrden": "/satis/insertarOrden"
+    },
+    "servicioCorreo": {
+        "servicioCorreo": "/satis/servicioCorreo"
     }
 }
