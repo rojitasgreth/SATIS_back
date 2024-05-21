@@ -1,17 +1,21 @@
 const {dbconn} = require('../bd/index');
 
+const {
+    EmailFormatUser,
+    sendEmail
+} = require("./servicioCorreo.model");
+
 async function insertarCliente(data, callback){
     try {
         let {RIF, cliente, telefono, email, estado, calle, edificio} = data;
 
         let sql = `INSERT INTO public.clientes(rif, razon_social, telefono, correo, estado, calle, edificio)
-                                        VALUES ('${RIF}', '${cliente}', '${telefono}', '${email}', '${estado}', '${calle}', ${edificio !== undefined ? `'${edificio}'` : 'null'});`;
+                                        VALUES ('${RIF}', '${cliente}', '${telefono}', '${email}', '${estado}', '${calle}', ${edificio !== undefined ? `'${edificio}'` : 'null'}) RETURNING id;`;
+        let outsql = await dbconn.query(sql);
+        let idCliente = outsql[0][0].id;
 
-        let outSql = await dbconn.query(sql);
-
-
-        callback(null, 'Insercion correcta');
-    } catch (error) {
+        callback(null, idCliente);
+        } catch (error) {
         console.error(error, 'Error de Insercion');
         callback(error, null);
     }
@@ -23,9 +27,11 @@ async function insertarOrden(data, callback){
     const transaction = await dbconn.transaction();
 
     try {
+            let {email} = data.cliente;
             let sql = `INSERT INTO public.orden_compra(id_cliente, id_usuario, condiciones, tipo_envio, estatus_finalizado, estatus_correo) 
                         VALUES ('${data.cliente.id_cliente}', '${data.cliente.id_usuario}', '${data.cliente.condicion}', '${data.cliente.tipo_envio}', true , false) RETURNING id`;
                     let outsql = await dbconn.query (sql, {transaction});
+                    //let correoAlternativo = "rojasgrethmar@gmail.com"
                     console.log(outsql);
                     let idSql = outsql[0][0].id;
     
@@ -36,9 +42,12 @@ async function insertarOrden(data, callback){
                         console.log(outsql2);
             }
 
+            const html = EmailFormatUser();
+            console.log(email);
+
             await transaction.commit()
-            callback(null, 'Insercion correcta');
-            
+            sendEmail(email, "Correo exitoso", html);
+            callback(null, 'Insercion correcta');            
             }catch (error) {
 
                 transaction.rollback()
