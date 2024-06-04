@@ -19,5 +19,8 @@
     },
     "servicioCorreo": {
         "servicioCorreo": "/satis/servicioCorreo"
+    },
+    "PDF": {
+        "generateInvoicePDF": "/satis/generateInvoicePDF"
     }
 }
