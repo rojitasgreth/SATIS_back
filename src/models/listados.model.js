@@ -186,15 +186,30 @@ async function listarDetalles(data, callback){
     try {
         let {idUser, idCompra} = data;
 
-        let sql = ` SELECT oc.id as id_orden_compra, fecha, razon_social, rif, telefono, correo, estado, calle, edificio, condiciones, tipo_envio, estatus_finalizado, estatus_correo, cod_categoria, dc.genero, cod_color, descripcion_color,cantidad 
-                    FROM orden_compra as oc
-                    INNER JOIN detalle_orden as deo  
-                    ON oc.id = deo.id_orden  
-                    INNER JOIN detalle_colores as dc
-                    ON deo.genero = dc.genero AND deo.cod_categoria = dc.categoria AND deo.cod_color = dc.codigo_color
-                    INNER JOIN clientes as c
-                    ON c.id = oc.id_cliente
-                    WHERE id_usuario = ${idUser} AND oc.id = ${idCompra};`;
+        let sql = `
+        SELECT oc.id as id_orden_compra, fecha, razon_social, rif, telefono, 
+               correo, estado, calle, edificio, condiciones, tipo_envio, estatus_finalizado,
+               estatus_correo, descripcion,deo.cod_categoria, dc.genero, cod_color, descripcion_color, cantidad,
+            CASE 
+                WHEN oc.condiciones = 'Distribuidor' THEN dcat.precio_dist 
+                WHEN oc.tipo_envio = 'Nacional' THEN dcat.precio_con_envio
+                ELSE dcat.precio 
+            END as precio,
+            dcat.img
+        FROM orden_compra as oc
+        INNER JOIN detalle_orden as deo  
+            ON oc.id = deo.id_orden  
+        INNER JOIN detalle_colores as dc
+            ON deo.genero = dc.genero 
+            AND deo.cod_categoria = dc.categoria 
+            AND deo.cod_color = dc.codigo_color
+        INNER JOIN clientes as c
+            ON c.id = oc.id_cliente
+        INNER JOIN detalle_categoria as dcat
+            ON deo.cod_categoria = dcat.cod_categoria
+        WHERE id_usuario = ${idUser} 
+        AND oc.id = ${idCompra};`;
+
         let outSql = await dbconn.query(sql);
         let obj = outSql[0];
 
