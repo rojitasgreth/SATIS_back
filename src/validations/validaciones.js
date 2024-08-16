@@ -26,8 +26,7 @@ const listadosValidacion = {
     listarCliente: [
         check('RIF')
             .notEmpty().withMessage(notempty)
-            .isNumeric().withMessage(notnumeric) 
-            .isLength({min:8, max:9}).withMessage(notlength) 
+            .isLength({min:8, max:11}).withMessage(notlength) 
     ],
     listarColores: [
         check('cod_categoria')
@@ -55,8 +54,7 @@ const insercionesValidacion = {
     insertarCliente: [
         check('RIF')
             .notEmpty().withMessage(notempty)
-            .isNumeric().withMessage(notnumeric) 
-            .isLength({min:8, max:9}).withMessage(notlength),
+            .isLength({min:8, max:11}).withMessage(notlength),
         check('cliente')
             .notEmpty().withMessage(notempty)
             .isLength({min:5, max:100}).withMessage(notlength),

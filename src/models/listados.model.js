@@ -54,19 +54,19 @@ async function listarProductos(data, callback){
         let obj;
 
         if (Condicion != 'Distribuidor') {
-            let sql = `SELECT cod_categoria, categoria, descripcion, cantidad_piezas, precio, total, img FROM detalle_categoria ORDER BY categoria;`;
+            let sql = `SELECT cod_categoria, categoria, descripcion, cantidad_piezas, precio, total, img FROM detalle_categoria  WHERE activo = true ORDER BY categoria;`;
             let outSql = await dbconn.query(sql);
             obj = outSql[0]
         }
 
         if (Envio == 'Nacional') {
-            let sql = `SELECT cod_categoria, categoria, descripcion, cantidad_piezas, precio_con_envio, total_con_envio, img FROM detalle_categoria ORDER BY categoria;`;
+            let sql = `SELECT cod_categoria, categoria, descripcion, cantidad_piezas, precio_con_envio, total_con_envio, img FROM detalle_categoria WHERE activo = true ORDER BY categoria;`;
             let outSql = await dbconn.query(sql);
             obj = outSql[0]
         }
 
         if (Condicion == 'Distribuidor') {
-            let sql = `SELECT cod_categoria, categoria, descripcion, cantidad_piezas, precio_dist, total_dist, img FROM detalle_categoria ORDER BY categoria;`;
+            let sql = `SELECT cod_categoria, categoria, descripcion, cantidad_piezas, precio_dist, total_dist, img FROM detalle_categoria WHERE activo = true ORDER BY categoria;`;
             let outSql = await dbconn.query(sql);
             obj = outSql[0]
         }
@@ -89,7 +89,7 @@ async function listarProductosGeneral(data, callback){
 
         let obj;
 
-            let sql = `SELECT cod_categoria, categoria, descripcion, cantidad_piezas, img FROM detalle_categoria ORDER BY categoria;`;
+            let sql = `SELECT cod_categoria, categoria, descripcion, cantidad_piezas, img FROM detalle_categoria WHERE activo = true ORDER BY categoria;`;
             let outSql = await dbconn.query(sql);
             obj = outSql[0]
         
