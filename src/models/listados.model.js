@@ -3,7 +3,7 @@ const {dbconn} = require('../bd/index');
 async function listarOrdenes(data, callback){
     try {
         let {idUser} = data;
-        console.log(data);
+        //console.log(data);
 
         let sql = `SELECT oc.id, fecha, estatus_finalizado, estatus_correo, razon_social FROM orden_compra oc inner join clientes as cl ON oc.id_cliente = cl.id WHERE id_usuario = ${idUser} ORDER BY oc.fecha DESC;`;
         let outSql = await dbconn.query(sql);
@@ -24,7 +24,7 @@ async function listarOrdenes(data, callback){
 async function listarOrden(data, callback){
     try {
         let {idUser, idOrden} = data;
-        console.log(data);
+        //console.log(data);
 
         let sql = `SELECT oc.id as id_orden, oc.fecha, condiciones, tipo_envio, razon_social, rif, telefono, correo, estado, calle, edificio, descripcion, dor.genero, dco.descripcion_color,cantidad 
                    FROM orden_compra oc 
@@ -74,7 +74,7 @@ async function listarProductos(data, callback){
         if (obj == undefined) {
             callback(null, 'VACIO');
         } else {
-            console.log(obj);
+            //console.log(obj);
             callback(null, obj);
         }
         
@@ -108,6 +108,8 @@ async function listarProductosGeneral(data, callback){
 async function listarProductoIndividual(data, callback){
     try {
         let {Condicion, Envio, Codigo} = data;
+        console.log(data);
+        
         let obj;
 
         if (Condicion != 'Distribuidor') {
@@ -119,13 +121,15 @@ async function listarProductoIndividual(data, callback){
         if (Envio == 'Nacional') {
             let sql = `SELECT cod_categoria, categoria, descripcion, cantidad_piezas, precio_con_envio, total_con_envio, img FROM detalle_categoria WHERE cod_categoria = '${Codigo}' ;`;
             let outSql = await dbconn.query(sql);
-            obj = outSql[0]
+            obj = outSql[0];
+            obj[0].precio = obj[0].precio_con_envio;
         }
 
         if (Condicion == 'Distribuidor') {
             let sql = `SELECT cod_categoria, categoria, descripcion, cantidad_piezas, precio_dist, total_dist, img FROM detalle_categoria WHERE cod_categoria = '${Codigo}';`;
             let outSql = await dbconn.query(sql);
             obj = outSql[0]
+            obj[0].precio = obj[0].precio_dist;
         }
 
         if (obj == undefined) {
@@ -163,7 +167,7 @@ async function listarCliente(data, callback){
 async function listarColores(data, callback){
     try {
         let {cod_categoria, genero} = data;
-        console.log(data);
+        //console.log(data);
 
         let sql = `SELECT codigo_color, descripcion_color FROM detalle_colores WHERE genero = '${genero}' AND categoria = '${cod_categoria}';`;
         let outSql = await dbconn.query(sql);
