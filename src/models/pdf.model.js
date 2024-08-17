@@ -26,51 +26,56 @@ async function generateInvoicePDF(data) {
             <html>
             <head>
                 <title>Factura</title>
-                <style>
-                    body {
-                        font-family: Arial, sans-serif;
-                        margin: 0;
-                        padding: 20px;
-                    }
-                    .header {
-                        display: flex;
-                        justify-content: space-between;
-                        border-bottom: 1px solid #000;
-                        padding-bottom: 10px;
-                    }
-                    .header-left {
-                        text-align: left;
-                    }
-                    .header-right {
-                        text-align: right;
-                    }
-                    .info {
-                        margin-top: 20px;
-                    }
-                    .info div {
-                        margin-bottom: 10px;
-                    }
-                    .details {
-                        margin-top: 30px;
-                    }
-                    table {
-                        width: 100%;
-                        border-collapse: collapse;
-                        margin-top: 20px;
-                    }
-                    th, td {
-                        border: 1px solid #000;
-                        padding: 8px;
-                        text-align: left;
-                    }
-                    th {
-                        background-color: #f2f2f2;
-                    }
-                    .total {
-                        text-align: right;
-                        margin-top: 20px;
-                    }
-                </style>
+            <style>
+                body {
+                    font-family: Arial, sans-serif;
+                    margin: 0;
+                    padding: 20px;
+                }
+                .header {
+                    display: flex;
+                    justify-content: space-between;
+                    border-bottom: 1px solid #000;
+                    padding-bottom: 10px;
+                }
+                .header-left {
+                    text-align: left;
+                }
+                .header-right {
+                    text-align: right;
+                }
+                .info {
+                    margin-top: 20px;
+                }
+                .info div {
+                    margin-bottom: 10px;
+                }
+                .details {
+                    margin-top: 30px;
+                }
+                table {
+                    width: 100%;
+                    border-collapse: collapse;
+                    margin-top: 20px;
+                }
+                th, td {
+                    border: 1px solid #000;
+                    padding: 8px;
+                    text-align: left;
+                }
+                th {
+                    background-color: #f2f2f2;
+                }
+                .total {
+                    text-align: right;
+                    margin-top: 20px;
+                }
+                /* Agregar margen superior para la tabla en la segunda página */
+                @page {
+                    margin-top: 10mm;
+                }
+            </style>
+
             </head>
             <body>
                 <div class="header">

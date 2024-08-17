@@ -111,19 +111,19 @@ async function listarProductoIndividual(data, callback){
         let obj;
 
         if (Condicion != 'Distribuidor') {
-            let sql = `SELECT cod_categoria, categoria, descripcion, cantidad_piezas, precio, total, img FROM detalle_categoria WHERE cod_categoria = '${Codigo}';`;
+            let sql = `SELECT cod_categoria, categoria, descripcion, cantidad_piezas, precio, total, detalle, img FROM detalle_categoria WHERE cod_categoria = '${Codigo}';`;
             let outSql = await dbconn.query(sql);
             obj = outSql[0]
         }
 
         if (Envio == 'Nacional') {
-            let sql = `SELECT cod_categoria, categoria, descripcion, cantidad_piezas, precio_con_envio, total_con_envio, img FROM detalle_categoria WHERE cod_categoria = '${Codigo}' ;`;
+            let sql = `SELECT cod_categoria, categoria, descripcion, cantidad_piezas, precio_con_envio, total_con_envio, detalle, img FROM detalle_categoria WHERE cod_categoria = '${Codigo}' ;`;
             let outSql = await dbconn.query(sql);
             obj = outSql[0]
         }
 
         if (Condicion == 'Distribuidor') {
-            let sql = `SELECT cod_categoria, categoria, descripcion, cantidad_piezas, precio_dist, total_dist, img FROM detalle_categoria WHERE cod_categoria = '${Codigo}';`;
+            let sql = `SELECT cod_categoria, categoria, descripcion, cantidad_piezas, precio_dist, total_dist, detalle, img FROM detalle_categoria WHERE cod_categoria = '${Codigo}';`;
             let outSql = await dbconn.query(sql);
             obj = outSql[0]
         }
