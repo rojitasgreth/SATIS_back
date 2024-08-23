@@ -3,7 +3,7 @@ const puppeteer = require('puppeteer');
 async function generateInvoicePDF(data) {
     console.log(data.cliente, 'esto recibe');
     let { cliente, detalle } = data;
-    const outputPath = `./PDFs/compra ${cliente.nombre} ${cliente.id_orden} ${cliente.fecha}.pdf`;
+    const outputPath = `./PDFs/compra-${cliente.nombre}-${cliente.id_orden}-${cliente.fecha}.pdf`;
     let browser;
     try {
         browser = await puppeteer.launch({ args: ['--no-sandbox', '--disable-setuid-sandbox'] });

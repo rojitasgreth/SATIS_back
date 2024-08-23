@@ -2,6 +2,7 @@ const nodemailer = require('nodemailer');
 const { resolve } = require('path');
 const { rejects } = require('assert');
 require('dotenv').config({ path: resolve(__dirname, "../../.env") })
+console.log(process.env.USER_EMAIL);
 
 const configureEmailService = () => {
   const transporter = nodemailer.createTransport({
@@ -10,7 +11,7 @@ const configureEmailService = () => {
     port: process.env.EMAIL_PORT,
     auth: {
       user: process.env.USER_EMAIL,
-      pass: process.env.CLAVE_EMAIL
+      pass: process.env.CLAVE
     },
     tls: {
       rejectUnauthorized: false
@@ -22,27 +23,30 @@ const configureEmailService = () => {
 
 
 const sendEmail = (to, subject, html, attachments) => {
-  return new Promise((resolve, reject) => {
   const transporter = configureEmailService();
 
+  // Opciones del correo electrónico
   const mailOptions = {
-    from: process.env.USER_EMAIL,
-    to: to,
-    //cc: 'infraestructura-tecnologica@.gob.ve',
-    subject: subject,
-    html: html,
-    attachments: attachments
+      from: process.env.USER_EMAIL,
+      to: to,
+      subject: subject,
+      html: html,
+      attachments: attachments
   };
 
-  transporter.sendMail(mailOptions, (error, info) => {
-    if (error) {
-      rejects(error);
-    } else {
-      resolve(info.response)
-    }
+  // Envío del correo electrónico
+  return new Promise((resolve, reject) => {
+      transporter.sendMail(mailOptions, (error, info) => {
+          if (error) {
+              console.error('Error al enviar correo:', error);
+              reject(error);
+          } else {
+              resolve(info);
+          }
+      });
   });
-});
 };
+
 
 function EmailFormatUser() {
 

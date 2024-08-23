@@ -26,7 +26,7 @@ async function listarOrden(data, callback){
         let {idUser, idOrden} = data;
         //console.log(data);
 
-        let sql = `SELECT oc.id as id_orden, oc.fecha, condiciones, tipo_envio, razon_social, rif, telefono, correo, estado, calle, edificio, descripcion, dor.genero, dco.descripcion_color,cantidad 
+        let sql = `SELECT oc.id as id_orden, oc.fecha, condiciones, tipo_envio, razon_social, rif, telefono, correo, estado, calle, edificio, descripcion, dor.genero, dco.descripcion_color, cantidad 
                    FROM orden_compra oc 
                    INNER JOIN clientes as cl ON oc.id_cliente = cl.id 
                    INNER JOIN detalle_orden dor ON oc.id = dor.id_orden
@@ -60,13 +60,13 @@ async function listarProductos(data, callback){
         }
 
         if (Envio == 'Nacional') {
-            let sql = `SELECT cod_categoria, categoria, descripcion, cantidad_piezas, precio_con_envio, total_con_envio, img FROM detalle_categoria WHERE activo = true ORDER BY categoria;`;
+            let sql = `SELECT cod_categoria, categoria, descripcion, cantidad_piezas, precio_con_envio as precio, total_con_envio, img FROM detalle_categoria WHERE activo = true ORDER BY categoria;`;
             let outSql = await dbconn.query(sql);
             obj = outSql[0]
         }
 
         if (Condicion == 'Distribuidor') {
-            let sql = `SELECT cod_categoria, categoria, descripcion, cantidad_piezas, precio_dist, total_dist, img FROM detalle_categoria WHERE activo = true ORDER BY categoria;`;
+            let sql = `SELECT cod_categoria, categoria, descripcion, cantidad_piezas, precio_dist as precio, total_dist, img FROM detalle_categoria WHERE activo = true ORDER BY categoria;`;
             let outSql = await dbconn.query(sql);
             obj = outSql[0]
         }
@@ -193,7 +193,7 @@ async function listarDetalles(data, callback){
         let sql = `
         SELECT oc.id as id_orden_compra, fecha, razon_social, rif, telefono, 
                correo, estado, calle, edificio, condiciones, tipo_envio, estatus_finalizado,
-               estatus_correo, descripcion,deo.cod_categoria, dc.genero, cod_color, descripcion_color, cantidad,
+               estatus_correo, descripcion,deo.cod_categoria, dc.genero, cod_color, descripcion_color, cantidad, dcat.cantidad_piezas,
             CASE 
                 WHEN oc.condiciones = 'Distribuidor' THEN dcat.precio_dist 
                 WHEN oc.tipo_envio = 'Nacional' THEN dcat.precio_con_envio

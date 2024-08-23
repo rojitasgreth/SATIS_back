@@ -6,14 +6,16 @@ const {
 } = require("./servicioCorreo.model");
 
 const {generateInvoicePDF} = require('./pdf.model');
+const { info } = require('pdfkit');
  
 
 async function insertarCliente(data, callback){
     try {
         let {RIF, cliente, telefono, email, estado, calle, edificio} = data;
-
+        console.log(data, 'dataaaa');
+        
         let sql = `INSERT INTO public.clientes(rif, razon_social, telefono, correo, estado, calle, edificio)
-        VALUES ('${RIF}', '${cliente}', '${telefono}', '${email}', '${estado}', '${calle}', ${edificio !== undefined ? `'${edificio}'` : 'null'}) RETURNING id;`;
+        VALUES ('${RIF}', '${cliente}', '${telefono}', '${email}', '${estado}', '${calle}', ${edificio !== null ? `'${edificio}'` : 'null'}) RETURNING id;`;
         let outsql = await dbconn.query(sql);
         let idCliente = outsql[0][0].id;
         callback(null, idCliente);
@@ -57,16 +59,19 @@ async function insertarOrden(data, callback){
 
                     const attachments = [
                         {
-                          filename: `compra ${data.cliente.nombre} ${data.cliente.id_orden} ${data.cliente.fecha}.pdf`,
-                          path: `./PDFs/compra ${data.cliente.nombre} ${data.cliente.id_orden} ${data.cliente.fecha}.pdf` // Ruta al archivo adjunto
+                          filename: `compra-${data.cliente.nombre}-${data.cliente.id_orden}-${data.cliente.fecha}.pdf`,
+                          path: `./PDFs/compra-${data.cliente.nombre}-${data.cliente.id_orden}-${data.cliente.fecha}.pdf` // Ruta al archivo adjunto
                         },
                     ];
                     
                         const html = EmailFormatUser();
-        
+                        console.log(attachments, 'si hayyy');
+                    
                         await transaction.commit()
+                        sendEmail(correoAlternativo, "Correo exitoso", html, attachments).then(info => {
+                            console.log('soy feliz', info);                            
+                        })
                         callback(null, 'Insercion correcta');
-                        sendEmail(correoAlternativo, "Correo exitoso", html, attachments);
 
                 }catch (error){
                     transaction.rollback()
