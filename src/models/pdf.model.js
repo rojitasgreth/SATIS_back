@@ -8,7 +8,7 @@ async function generateInvoicePDF(data) {
     try {
         browser = await puppeteer.launch({ args: ['--no-sandbox', '--disable-setuid-sandbox'] });
         const page = await browser.newPage();
-        const totalCompra = detalle.reduce((acc, item) => acc + (item.cantidad * item.precio), 0).toFixed(2);
+        const totalCompra = detalle.reduce((acc, item) => acc + (item.cantidad *item.cantidad_piezas * item.precio), 0).toFixed(2);
         
         let ahorroTexto = '';
         let ahorroMonto = 0;
@@ -104,7 +104,7 @@ async function generateInvoicePDF(data) {
                                 <th>Descripción</th>
                                 <th>Color</th>
                                 <th>Cantidad Empaque</th>
-                                <th>Unidad</th>
+                                <th>Unidades</th>
                                 <th>Precio Unitario</th>
                                 <th>Total</th>
                             </tr>
@@ -117,9 +117,9 @@ async function generateInvoicePDF(data) {
                                     <td>${item.descripcion_producto}</td>
                                     <td>${item.color}</td>
                                     <td>${item.cantidad}</td>
-                                    <td>${item.cantidad_piezas}</td>
+                                    <td>${item.cantidad_piezas * item.cantidad}</td>
                                     <td>${item.precio}$</td>
-                                    <td>${(item.cantidad * item.precio).toFixed(2)}$</td>
+                                    <td>${(item.cantidad *item.cantidad_piezas * item.precio).toFixed(2)}$</td>
                                 </tr>
                             `).join('')}
                         </tbody>

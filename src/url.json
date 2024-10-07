@@ -2,25 +2,31 @@
     "users": {
         "login": "/satis/login"
     },
-    "listados": {
-        "listarOrdenes": "/satis/listarOrdenes",
-        "listarOrden": "/satis/listarOrden",
-        "listarProductos": "/satis/listarProductos",
-        "listarProductosGeneral": "/satis/listarProductosGeneral",
-        "listarProductoIndividual": "/satis/listarProductoIndividual",
-        "listarCliente": "/satis/listarCliente",
-        "listarColores": "/satis/listarColores",
-        "listarDetalles": "/satis/listarDetalles"
 
+    "vendedor": {
+        "listados": {
+            "listarOrdenes": "/satis/listarOrdenes",
+            "listarOrden": "/satis/listarOrden",
+            "listarProductos": "/satis/listarProductos",
+            "listarProductosGeneral": "/satis/listarProductosGeneral",
+            "listarProductoIndividual": "/satis/listarProductoIndividual",
+            "listarCliente": "/satis/listarCliente",
+            "listarColores": "/satis/listarColores",
+            "listarDetalles": "/satis/listarDetalles"
+        },
+        "inserciones": {
+            "insertarCliente": "/satis/insertarCliente",
+            "insertarOrden": "/satis/insertarOrden"
+        },
+        "servicioCorreo": {
+            "servicioCorreo": "/satis/servicioCorreo"
+        },
+        "PDF": {
+            "generateInvoicePDF": "/satis/generateInvoicePDF"
+        }
     },
-    "inserciones": {
-        "insertarCliente": "/satis/insertarCliente",
-        "insertarOrden": "/satis/insertarOrden"
-    },
-    "servicioCorreo": {
-        "servicioCorreo": "/satis/servicioCorreo"
-    },
-    "PDF": {
-        "generateInvoicePDF": "/satis/generateInvoicePDF"
+
+    "supervisor": {
+        "listarVendedores": "/satis/listarVendedores"
     }
 }

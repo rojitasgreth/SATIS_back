@@ -11,7 +11,7 @@ const configureEmailService = () => {
     port: process.env.EMAIL_PORT,
     auth: {
       user: process.env.USER_EMAIL,
-      pass: process.env.CLAVE
+      pass: process.env.CLAVE_EMAIL
     },
     tls: {
       rejectUnauthorized: false

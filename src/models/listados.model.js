@@ -1,5 +1,7 @@
 const {dbconn} = require('../bd/index');
 
+
+// Vendedor
 async function listarOrdenes(data, callback){
     try {
         let {idUser} = data;
@@ -230,6 +232,34 @@ async function listarDetalles(data, callback){
     }
 }
 
+
+//Supervisor 
+
+async function listarVendedores(data, callback){
+    try {
+
+        let sql = `SELECT cedula, primer_nombre, segundo_nombre, primer_apellido, fecha_nacimiento, telefono, correo, usuario, clave, rol 
+                    FROM personal as p
+                    INNER JOIN usuarios as u
+                    ON u.id = p.id_usuario
+                    ORDER BY rol, cedula desc;`;
+        let outSql = await dbconn.query(sql);
+        let obj = outSql[0];
+
+        if (obj == undefined) {
+            callback(null, 'VACIO');
+        } else {
+            callback(null, obj);
+        }
+        
+    } catch (error) {
+        console.error(error, 'Error listar');
+        callback(error, null);
+    }
+}
+
+
+
 module.exports = {
     listarOrdenes,
     listarOrden,
@@ -238,5 +268,7 @@ module.exports = {
     listarProductoIndividual,
     listarCliente,
     listarColores,
-    listarDetalles
+    listarDetalles,
+
+    listarVendedores
 }
