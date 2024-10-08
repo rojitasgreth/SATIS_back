@@ -15,7 +15,8 @@ const configureEmailService = () => {
     },
     tls: {
       rejectUnauthorized: false
-    }
+    },
+    proxy: process.env.PROXY
   });
 
   return transporter;
