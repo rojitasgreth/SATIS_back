@@ -27,6 +27,17 @@
     },
 
     "supervisor": {
-        "listarVendedores": "/satis/listarVendedores"
+        "listados":{
+            "listarVendedores": "/satis/listarVendedores"
+        },
+        "inserciones": {
+            "insertarEmpleado": "/satis/insertarEmpleado"
+        },
+        "modificar": {
+            "modificarEmpleado": "/satis/modificarEmpleado"
+        },
+        "eliminacion" : {
+            "eliminarEmpleado": "/satis/eliminarEmpleado"
+        }
     }
 }

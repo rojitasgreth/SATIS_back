@@ -16,7 +16,7 @@ route.post(url.vendedor.listados.listarDetalles , controller.listarDetalles);
 
 
 //Supervisor
-route.post(url.supervisor.listarVendedores, controller.listarVendedores);
+route.post(url.supervisor.listados.listarVendedores, controller.listarVendedores);
 
 
 module.exports = route;

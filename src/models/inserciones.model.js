@@ -9,11 +9,12 @@ const {generateInvoicePDF} = require('./pdf.model');
 const { info } = require('pdfkit');
  
 
+// Vendedor
 async function insertarCliente(data, callback){
     try {
         let {RIF, cliente, telefono, email, estado, calle, edificio} = data;
         console.log(data, 'dataaaa');
-        
+
         let sql = `INSERT INTO public.clientes(rif, razon_social, telefono, correo, estado, calle, edificio)
         VALUES ('${RIF}', '${cliente}', '${telefono}', '${email}', '${estado}', '${calle}', ${edificio !== null ? `'${edificio}'` : 'null'}) RETURNING id;`;
         let outsql = await dbconn.query(sql);
@@ -93,7 +94,38 @@ async function insertarOrden(data, callback){
 
 }
 
+
+// Supervisor
+async function insertarEmpleado(data, callback){
+
+    const transaction = await dbconn.transaction();
+    try {
+
+        let sql = `INSERT INTO public.usuarios(usuario, clave, estatus, rol)
+                        VALUES ('${data.usuario}', '${data.clave}', '${data.estatus}', '${data.rol}') RETURNING id`;
+
+                let outsql = await dbconn.query (sql, {transaction});
+                console.log(outsql);
+                let idSql = outsql[0][0].id;
+
+                let sql2 = `INSERT INTO public.personal(id_usuario, cedula, primer_nombre, segundo_nombre, primer_apellido, segundo_apellido, fecha_nacimiento, telefono, correo) 
+                                VALUES ('${idSql}', '${data.cedula}', '${data.primer_nombre}', ${data.segundo_nombre !== null ? ` '${data.segundo_nombre}'` : 'null'}, '${data.primer_apellido}', ${data.segundo_apellido !== null ? `'${data.segundo_apellido}'` : 'null'}, '${data.fecha_nacimiento}', '${data.telefono}', '${data.correo}')`;
+                let outsql2 = await dbconn.query (sql2, {transaction});
+                console.log(outsql2);
+                
+                await transaction.commit()
+                callback(null, 'Insercion correcta');
+            
+        }catch (error) {
+            transaction.rollback()
+            console.error(error, 'Error de Insercion');
+            callback(error, null);
+    }
+}
+
 module.exports = {
     insertarCliente,
-    insertarOrden
+    insertarOrden,
+
+    insertarEmpleado
 }

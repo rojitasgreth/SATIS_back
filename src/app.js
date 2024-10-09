@@ -12,7 +12,10 @@ app.use(require('./routes/index.routes'));
 app.use(require('./routes/users.routes'));
 app.use(require('./routes/listados.routes'));
 app.use(require('./routes/inserciones.routes'));
+app.use(require('./routes/modificar.routes'));
+app.use(require('./routes/eliminacion.routes'));
 app.use(require('./routes/servicioCorreo.route'));
 app.use(require('./routes/pdf.router'));
+
 //Se exporta el modulo.
 module.exports = app;
